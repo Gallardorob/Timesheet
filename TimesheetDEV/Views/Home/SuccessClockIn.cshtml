@@ -1,0 +1,16 @@
+﻿@model TimesheetDEV.Models.PeopleModel
+@{
+    var successfulMessage = ViewBag.Message;
+}
+
+<div class="body-container text-center">
+    <h2 class="display-4">@Model.First_Name @Model.Last_Name you have successfully @successfulMessage.</h2>
+    <p>You will be redirected in 5 seconds to the main page.</p>
+</div>
+
+
+<script>
+    window.setTimeout(function () {
+        window.location.href = '@Url.Action("Login", "Home")';
+    }, 5000);
+</script>

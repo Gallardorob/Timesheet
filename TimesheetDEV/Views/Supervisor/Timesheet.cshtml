@@ -1,0 +1,32 @@
+﻿@model TimesheetDEV.ViewModels.SupervisorsViewModel
+
+<div class="body-container text-center">
+    <h3>Welcome @Model.Supervisor.First_Name</h3>
+    <p>Select an employee to view their time sheet.</p>
+
+    <form method="post">
+        <table class="table table-striped" id="tableContainer">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ActiveEmployees)
+                {
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.First_Name</td>
+                        <td>@item.Last_Name</td>
+                        <td>
+                            <button asp-controller="Supervisor" asp-action="EmployeeTimesheet" class="btn btn-primary" name="currentID" value=@item.ID>Select</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>

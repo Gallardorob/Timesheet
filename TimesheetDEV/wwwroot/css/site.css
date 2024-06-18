@@ -1,0 +1,135 @@
+@media (min-width: 768px) {
+    html {        
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    height: 100vh;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    height: 100vh;
+    width: 100%;
+    display: block;
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    display: block;
+    background:white;
+}
+
+
+.login-body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.loginLeftColumn {
+    flex: 40%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: white;
+    font-size: 40px;
+    color: dimgray;
+    display: table;
+}
+
+.loginLeftColumnContainer {
+    max-width: 300px;
+    height: auto;
+    margin: auto;
+    display: table-cell;
+    vertical-align: middle;
+    background:none;
+}
+
+#currentClock {
+    outline: 0;
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    width: auto;
+    color: dimgray;
+    text-align: center;
+}
+
+.loginRightColumn {
+    flex: 60%;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: #834885;
+    display:table;
+}
+
+.loginRightColumnContainer {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.loginRightColumn h3 {
+    color:white;
+}
+
+.loginRightColumn form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: auto auto;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.loginRightColumn input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.loginRightColumn button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #411b46;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+#tableContainer {
+    width: 1200px;
+    height: auto;
+    margin: 0 Auto;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

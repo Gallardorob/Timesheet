@@ -1,0 +1,36 @@
+﻿@model TimesheetDEV.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Clock In";
+    var incorrectLoginMessage = ViewBag.Message;
+}
+
+<div class="login-body text-center">
+
+    <div class="loginRightColumn">
+        <div class="loginRightColumnContainer">
+            <h3>Supervisor Login</h3>
+
+            <form asp-controller="Supervisor" asp-action="Login" method="post">
+
+                <label asp-for="LoginID"></label>
+                <input type="number" asp-for="LoginID" placeholder="ID Number"><br>
+                <span asp-validation-for="LoginID" style="color:red;"></span><br>
+
+                <label asp-for="LoginPassword"></label>
+                <input type="password" asp-for="LoginPassword" placeholder="Password"><br>
+                <span asp-validation-for="LoginPassword" style="color:red;"></span><br>
+
+                <button type="submit">Login</button>
+                @{
+                    // Displays message if user did not meet a certain condition. 
+                    // Such as incorrect password and username is they are not a supervisor.
+                    if (incorrectLoginMessage != null || incorrectLoginMessage != "")
+                    {
+                        <p style="color:red;">@incorrectLoginMessage</p>
+                    }
+                }
+
+            </form>
+        </div>
+    </div>
+</div>

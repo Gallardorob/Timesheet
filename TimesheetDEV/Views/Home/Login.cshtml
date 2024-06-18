@@ -1,0 +1,64 @@
+﻿@model TimesheetDEV.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Clock In";
+    var incorrectLoginMessage = ViewBag.Message;
+}
+
+<div class="login-body text-center">
+
+    <div class="loginLeftColumn">
+        <div class="loginLeftColumnContainer">
+            @* Show user the date and time that they will be clocking in at. *@
+            <span>@DateTime.Now.ToShortDateString()</span><br />
+            <input type="text" id="currentClock" />
+        </div>
+    </div>
+
+    <div class="loginRightColumn">
+        <div class="loginRightColumnContainer">
+            <h3>Login to punch in/out</h3>
+
+            <form class="formContainer" asp-controller="Home" asp-action="Login" method="post">
+
+                <label asp-for="LoginID"></label>
+                <input type="number" asp-for="LoginID" placeholder="ID Number"><br>
+                <span asp-validation-for="LoginID" style="color:red;"></span><br>
+
+                <label asp-for="LoginPassword"></label>
+                <input type="password" asp-for="LoginPassword" placeholder="Password"><br>
+                <span asp-validation-for="LoginPassword" style="color:red;"></span><br>
+
+                <button type="submit">Punch In/Out</button>
+                @{
+                    // Displays message if user did not meet a certain condition.
+                    // Such as incorrect password and username.
+                    if (incorrectLoginMessage != null || incorrectLoginMessage != "")
+                    {
+                        <p style="color:red;">@incorrectLoginMessage</p>
+                    }
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    setInterval("settime()", 1000);
+
+    function settime() {
+        var dateTime = new Date();
+        var hour = dateTime.getHours();
+        var minute = dateTime.getMinutes();
+        var second = dateTime.getSeconds();
+
+        if (minute < 10)
+            minute = "0" + minute;
+
+        if (second < 10)
+            second = "0" + second;
+
+        var time = "" + hour + ":" + minute + ":" + second;
+
+        document.getElementById("currentClock").value = time;
+    }
+</script>
