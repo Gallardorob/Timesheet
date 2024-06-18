@@ -1,6 +1,9 @@
 # Timesheet web application
 Project that allows staff to clock in and out for the day.
 
+## Employee Clock In/Out and Supervisor Login
+<img src="TimesheetDEV/wwwroot/img/Timesheet1.PNG" width="40%" height="40%"> <img src="TimesheetDEV/wwwroot/img/Timesheet2.PNG" width="40%" height="40%">
+
 ## Reason for this project
 This project was made for a small business in mind. The staff would be less than 10 employess working for a small shop. Clocking in and clocking out for this business was done on paper which is why the owner just wanted a simple way for them to clock in and out. 
 
