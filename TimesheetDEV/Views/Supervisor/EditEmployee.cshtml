@@ -1,34 +1,35 @@
 ﻿@model TimesheetDEV.ViewModels.EditEmployeeViewModel
 
 <div class="body-container text-center">
+    <div class="body-content">
+        <h3>@Model.First_Name @Model.Last_Name's shift on @Model.CURRENT_DATE</h3>
 
-    <h3>@Model.First_Name @Model.Last_Name's shift on @Model.CURRENT_DATE</h3>
+        @using (Html.BeginForm("SaveEmployeeShift", "Supervisor", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.LOG_ID)
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.First_Name)
+            @Html.HiddenFor(model => model.Last_Name)
+            @Html.HiddenFor(model => model.CURRENT_DATE)
+            @Html.HiddenFor(model => model.TotalTimeSpan)
 
-    @using (Html.BeginForm("SaveEmployeeShift", "Supervisor", FormMethod.Post))
-    {
-        @Html.HiddenFor(model => model.LOG_ID)
-        @Html.HiddenFor(model => model.ID)
-        @Html.HiddenFor(model => model.First_Name)
-        @Html.HiddenFor(model => model.Last_Name)
-        @Html.HiddenFor(model => model.CURRENT_DATE)
-        @Html.HiddenFor(model => model.TotalTimeSpan)
-
-        <table class="table table-borderless" id="tableContainer">
-            <thead>
-                <tr>
-                    <th>Clocked In</th>
-                    <th>Clocked Out</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Html.TextBoxFor(model => model.CLOCKED_IN, new { type = "time" })</td>
-                    <td>@Html.TextBoxFor(model => model.CLOCKED_OUT, new { type = "time" })</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    }
+            <table class="table table-borderless" id="tableContainer">
+                <thead>
+                    <tr>
+                        <th>Clocked In</th>
+                        <th>Clocked Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.TextBoxFor(model => model.CLOCKED_IN, new { type = "time" })</td>
+                        <td>@Html.TextBoxFor(model => model.CLOCKED_OUT, new { type = "time" })</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        }
+    </div>
 </div>

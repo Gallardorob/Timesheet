@@ -3,13 +3,13 @@
 @if (@Model.EditEmployeeRow.Count <= 0)
 {
     // This person is in the system but has not clocked in or out.
-    <div class="formContainer text-center">
+    <div class="body-container text-center">
         <h3>No schedule found for this user.</h3>
     </div>
 }
 else
 {
-    <div class="formContainer text-center">
+    <div class="body-container text-center">
         <h3>@Model.EditEmployeeRow[0].First_Name @Model.EditEmployeeRow[0].Last_Name's schedule</h3>
         <form method="post">
             <table class="table table-striped" id="tableContainer">
@@ -46,7 +46,7 @@ else
                                 <button asp-controller="Supervisor" asp-action="EditEmployeeShift" class="btn btn-primary" name="LogID" value=@item.LOG_ID>Edit</button>
                             </td>
                             <td>
-                                <button asp-controller="Supervisor" asp-action="DeleteEmployeeShift" class="btn btn-primary" name="LogID" value=@item.LOG_ID>Delete</button>
+                                <button asp-controller="Supervisor" asp-action="DeleteEmployeeShift" class="btn btn-danger" name="LogID" value=@item.LOG_ID>Delete</button>
                             </td>
                         </tr>
                     }

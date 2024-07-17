@@ -4,9 +4,13 @@
     var incorrectLoginMessage = ViewBag.Message;
 }
 
+@section loginstyles {
+    <link href="@Url.Content("~/css/login.css")" rel="stylesheet" type="text/css" />
+}
+
 <div class="login-body text-center">
 
-    <div class="loginRightColumn">
+    <div class="loginRightColumn" style="border-radius:10px;">
         <div class="loginRightColumnContainer">
             <h3>Supervisor Login</h3>
 

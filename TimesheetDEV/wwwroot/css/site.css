@@ -20,110 +20,56 @@ body {
     display: block;
 }
 
+nav {
+    background-color: #411b46;
+}
+
+navbar-nav {
+    color: white;
+}
+
 .main-body {
     height: 100%;
     width: 100%;
-    display: block;
-    background:white;
+    display: flex;
+    border: none;
+    background-color: white;
 }
 
+.body-container {
+    height: auto;
+    width: 1000px;
+    min-width: 950px;
+    margin: 0 auto;
+    padding: 8px;
+    display:block;
+    background-color:white;
+}
+
+.body-content{
+    height:100%;
+    width:auto;
+    background-color:white;
+    margin:auto;
+    padding:0;
+    display:block;
+    align-content:center;
+}
 
 .login-body {
-    height: 100%;
-    width: 100%;
+    height: 500px;
+    width:1000px;
+    min-width: 950px;
     display: flex;
-}
-
-.loginLeftColumn {
-    flex: 40%;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background-color: white;
-    font-size: 40px;
-    color: dimgray;
-    display: table;
-}
-
-.loginLeftColumnContainer {
-    max-width: 300px;
-    height: auto;
     margin: auto;
-    display: table-cell;
-    vertical-align: middle;
-    background:none;
-}
-
-#currentClock {
-    outline: 0;
-    background: none;
-    border: 0;
-    margin: 0;
-    padding: 15px;
-    box-sizing: border-box;
-    width: auto;
-    color: dimgray;
-    text-align: center;
-}
-
-.loginRightColumn {
-    flex: 60%;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    background-color: #834885;
-    display:table;
-}
-
-.loginRightColumnContainer {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.loginRightColumn h3 {
-    color:white;
-}
-
-.loginRightColumn form {
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: auto auto;
-    padding: 45px;
-    text-align: center;
+    padding: 0;
+    border-radius: 10px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-.loginRightColumn input {
-    font-family: "Roboto", sans-serif;
-    outline: 0;
-    background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-.loginRightColumn button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background: #411b46;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-}
-
 #tableContainer {
-    width: 1200px;
+    width: 1000px;
+    min-width: 950px;
     height: auto;
     margin: 0 Auto;
 }

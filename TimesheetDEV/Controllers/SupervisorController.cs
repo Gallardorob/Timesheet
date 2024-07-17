@@ -128,7 +128,7 @@ namespace TimesheetDEV.Controllers
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    string sqlText = $"Select * FROM {dbName}.[Timesheet] WHERE ID = '{currentID}' ORDER BY LOG_ID DESC";
+                    string sqlText = $"Select * FROM {dbName}.[EmployeeShifts] WHERE ID = '{currentID}' ORDER BY LOG_ID DESC";
                     SqlCommand cmd = new SqlCommand(sqlText, con);
                     var reader = cmd.ExecuteReader();
 
@@ -140,12 +140,12 @@ namespace TimesheetDEV.Controllers
                             ID = (int)reader["ID"],
                             First_Name = reader["First_Name"].ToString(),
                             Last_Name = reader["Last_Name"].ToString(),
-                            CURRENT_DATE = Convert.IsDBNull(reader["START_TIMESTAMP"]) ? null : DateOnly.FromDateTime((DateTime)reader["START_TIMESTAMP"]),
-                            CLOCKED_IN = Convert.IsDBNull(reader["START_TIMESTAMP"]) ? null : TimeOnly.FromDateTime((DateTime) reader["START_TIMESTAMP"]),
-                            CLOCKED_OUT = Convert.IsDBNull(reader["END_TIMESTAMP"]) ? null : TimeOnly.FromDateTime((DateTime) reader["END_TIMESTAMP"]),
-                            TotalTimeSpan = (Convert.IsDBNull(reader["START_TIMESTAMP"]) || Convert.IsDBNull(reader["END_TIMESTAMP"]))
+                            CURRENT_DATE = Convert.IsDBNull(reader["CLOCK_IN"]) ? null : DateOnly.FromDateTime((DateTime)reader["CLOCK_IN"]),
+                            CLOCKED_IN = Convert.IsDBNull(reader["CLOCK_IN"]) ? null : TimeOnly.FromDateTime((DateTime) reader["CLOCK_IN"]),
+                            CLOCKED_OUT = Convert.IsDBNull(reader["CLOCK_OUT"]) ? null : TimeOnly.FromDateTime((DateTime) reader["CLOCK_OUT"]),
+                            TotalTimeSpan = (Convert.IsDBNull(reader["CLOCK_IN"]) || Convert.IsDBNull(reader["CLOCK_OUT"]))
                                 ? TimeSpan.FromSeconds(0) :
-                                GetTotalTime((DateTime) reader["START_TIMESTAMP"], (DateTime)reader["END_TIMESTAMP"])
+                                GetTotalTime((DateTime) reader["CLOCK_IN"], (DateTime)reader["CLOCK_OUT"])
                         };
                         tempEditList.Add(tempEdit);
                     }
@@ -178,7 +178,7 @@ namespace TimesheetDEV.Controllers
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    string sqlText = $"Select * FROM {dbName}.[Timesheet] WHERE LOG_ID = '{logId}'";
+                    string sqlText = $"Select * FROM {dbName}.[EmployeeShifts] WHERE LOG_ID = '{logId}'";
                     SqlCommand cmd = new SqlCommand(sqlText, con);
                     var reader = cmd.ExecuteReader();
 
@@ -190,9 +190,9 @@ namespace TimesheetDEV.Controllers
                             ID = (int)reader["ID"],
                             First_Name = reader["First_Name"].ToString(),
                             Last_Name = reader["Last_Name"].ToString(),
-                            CURRENT_DATE = Convert.IsDBNull(reader["START_TIMESTAMP"]) ? null : DateOnly.FromDateTime((DateTime)reader["START_TIMESTAMP"]),
-                            CLOCKED_IN = Convert.IsDBNull(reader["START_TIMESTAMP"]) ? null : TimeOnly.FromDateTime((DateTime)reader["START_TIMESTAMP"]),
-                            CLOCKED_OUT = Convert.IsDBNull(reader["END_TIMESTAMP"]) ? null : TimeOnly.FromDateTime((DateTime)reader["END_TIMESTAMP"])
+                            CURRENT_DATE = Convert.IsDBNull(reader["CLOCK_IN"]) ? null : DateOnly.FromDateTime((DateTime)reader["CLOCK_IN"]),
+                            CLOCKED_IN = Convert.IsDBNull(reader["CLOCK_IN"]) ? null : TimeOnly.FromDateTime((DateTime)reader["CLOCK_IN"]),
+                            CLOCKED_OUT = Convert.IsDBNull(reader["CLOCK_OUT"]) ? null : TimeOnly.FromDateTime((DateTime)reader["CLOCK_OUT"])
                         };
                     }
                 }
@@ -217,7 +217,7 @@ namespace TimesheetDEV.Controllers
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    string sqlText = $"DELETE FROM {dbName}.[Timesheet] WHERE LOG_ID = '{logID}'";
+                    string sqlText = $"DELETE FROM {dbName}.[EmployeeShifts] WHERE LOG_ID = '{logID}'";
                     SqlCommand cmd = new SqlCommand(sqlText, con);
                     var reader = cmd.ExecuteReader();
                     con.Close();
@@ -251,7 +251,7 @@ namespace TimesheetDEV.Controllers
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    string sqlText = $"UPDATE {dbName}.Timesheet SET START_TIMESTAMP = '{sDate} {sCInTime}', END_TIMESTAMP = '{sDate} {sCOutTime}' WHERE LOG_ID = {eevModel.LOG_ID}";
+                    string sqlText = $"UPDATE {dbName}.EmployeeShifts SET CLOCK_IN = '{sDate} {sCInTime}', CLOCK_OUT = '{sDate} {sCOutTime}' WHERE LOG_ID = {eevModel.LOG_ID}";
                     SqlCommand cmd = new SqlCommand(sqlText, con);
                     var reader = cmd.ExecuteReader();
                     con.Close();
@@ -315,23 +315,24 @@ namespace TimesheetDEV.Controllers
             return ts;
         }
 
-        //private SqlDataReader dataReader()
-        //{
-        //        var connString = _configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
-        //        var dbName = _configuration.GetValue<string>("DatabaseName");
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(connString))
-        //        {
-        //            con.Open();
-        //            //string sqlText = $"UPDATE {dbName}.Timesheet SET START_TIMESTAMP = '{sDate} {sCInTime}', END_TIMESTAMP = '{sDate} {sCOutTime}' WHERE LOG_ID = {eevModel.LOG_ID}";
-        //            SqlCommand cmd = new SqlCommand(sqlText, con);
-        //            var reader = cmd.ExecuteReader();
-        //            con.Close();
-        //        }
-        //    } catch (Exception ex) { 
-        //    }
-        //    return 
-        //}
+        private SqlDataReader dataReader(SqlConnection con, string sqlText)
+        {
+            var connString = _configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
+            var dbName = _configuration.GetValue<string>("DatabaseName");
+            SqlDataReader reader = null;
+
+            try
+            {
+                    con.Open();
+                    //string sqlText = $"UPDATE {dbName}.Timesheet SET CLOCK_IN = '{sDate} {sCInTime}', CLOCK_OUT = '{sDate} {sCOutTime}' WHERE LOG_ID = {eevModel.LOG_ID}";
+                    SqlCommand cmd = new SqlCommand(sqlText, con);
+                    reader = cmd.ExecuteReader();
+                
+            }
+            catch (Exception ex)
+            {
+            }
+            return reader;
+        }
     }
 }

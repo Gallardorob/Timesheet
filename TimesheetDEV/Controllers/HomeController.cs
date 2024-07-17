@@ -107,16 +107,23 @@ namespace TimesheetDEV.Controllers
             // If clockedLogID string is empty then the user has not clocked in and we can insert a new clock in entry. 
             // Otherwise the user has clocked in for the day and we can use the log id to clock them out. 
             if (String.IsNullOrEmpty(clockedLogID)) {
-                sqlQuery = $"INSERT INTO {dbName}.[Timesheet] (ID, First_Name, Last_Name, START_TIMESTAMP) VALUES ({currentUser.ID}, '{currentUser.First_Name}', '{currentUser.Last_Name}', GetDate())";
+                sqlQuery = $"INSERT INTO {dbName}.[EmployeeShifts] (ID, First_Name, Last_Name, CLOCK_IN) VALUES ({currentUser.ID}, '{currentUser.First_Name}', '{currentUser.Last_Name}', GetDate())";
                 message = "clocked in";
             }
             else
             {
-                sqlQuery = $"UPDATE {dbName}.[Timesheet] SET END_TIMESTAMP = GetDate() WHERE LOG_ID = {clockedLogID} and END_TIMESTAMP IS NULL";
+                sqlQuery = $"UPDATE {dbName}.[EmployeeShifts] SET CLOCK_OUT = GetDate() WHERE LOG_ID = {clockedLogID} and CLOCK_OUT IS NULL";
                 message = "clocked out";
             }
 
             SqlCommand updateCmd = new SqlCommand(sqlQuery, sqlConn);
+
+            // Check if insert or update were successfull
+            int isSuccessfull = updateCmd.ExecuteNonQuery();
+            if (isSuccessfull > 0)
+            {
+                
+            }
 
             return message;
         }
@@ -127,7 +134,7 @@ namespace TimesheetDEV.Controllers
             var logidRow = String.Empty;
             string dbName = _configuration.GetValue<string>("DatabaseName");
 
-            string sqlQuery = $"SELECT LOG_ID FROM {dbName}.[Timesheet] WHERE ID = '{userID}' AND START_TIMESTAMP >= CONVERT(date, GETDATE()) AND END_TIMESTAMP IS NULL";
+            string sqlQuery = $"SELECT LOG_ID FROM {dbName}.[EmployeeShifts] WHERE ID = '{userID}' AND CLOCK_IN >= CONVERT(date, GETDATE()) AND CLOCK_OUT IS NULL";
             SqlCommand updateCmd = new SqlCommand(sqlQuery, sqlConn);
             var sqlReader = updateCmd.ExecuteReader();
 
@@ -136,6 +143,28 @@ namespace TimesheetDEV.Controllers
                 logidRow = sqlReader["LOG_ID"].ToString();
             }
             return logidRow;
+        }
+
+
+        private SqlDataReader dataReader(string sqlText)
+        {
+            var connString = _configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
+            var dbName = _configuration.GetValue<string>("DatabaseName");
+            SqlDataReader reader = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    con.Open();
+                    //string sqlText = $"UPDATE {dbName}.Timesheet SET CLOCK_IN = '{sDate} {sCInTime}', CLOCK_OUT = '{sDate} {sCOutTime}' WHERE LOG_ID = {eevModel.LOG_ID}";
+                    SqlCommand cmd = new SqlCommand(sqlText, con);
+                    reader = cmd.ExecuteReader();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return reader;
         }
     }
 }

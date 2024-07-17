@@ -4,11 +4,17 @@
     var incorrectLoginMessage = ViewBag.Message;
 }
 
-<div class="login-body text-center">
+@section loginstyles {
+    <link href="@Url.Content("~/css/login.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="login-body">
 
     <div class="loginLeftColumn">
         <div class="loginLeftColumnContainer">
             @* Show user the date and time that they will be clocking in at. *@
+            <h3>Welcome!</h3>
+            <p>Login to punch in or punch out for the day.</p>
             <span>@DateTime.Now.ToShortDateString()</span><br />
             <input type="text" id="currentClock" />
         </div>
@@ -16,7 +22,7 @@
 
     <div class="loginRightColumn">
         <div class="loginRightColumnContainer">
-            <h3>Login to punch in/out</h3>
+            <h3>Punch in or Punch out</h3>
 
             <form class="formContainer" asp-controller="Home" asp-action="Login" method="post">
 
